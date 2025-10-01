@@ -1,0 +1,57 @@
+﻿.todolist-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.todolist-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.3s ease;
+}
+
+    .todolist-item:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+.todolist-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.todolist-description {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.todolist-created {
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+}
+
+.back-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 14px;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+    .back-button:hover {
+        background-color: #0056b3;
+    }

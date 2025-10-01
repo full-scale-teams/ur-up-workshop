@@ -1,0 +1,18 @@
+﻿@page
+@model StarterApp.Pages.Todolist.ViewModel
+@{
+    var todo = Model.Todolist;
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/view-todolist.css" />
+}
+
+<div class="todolist-container">
+    <a class="nav-link text-dark" asp-page="/Todolist">← Back to List</a>
+    <div class="todolist-item">
+        <div class="todolist-title">@todo.Title</div>
+        <div class="todolist-description">@todo.Description</div>
+        <div class="todolist-created">Created at: @todo.CreatedAt.ToLocalTime().ToString("f")</div>
+    </div>
+</div>
