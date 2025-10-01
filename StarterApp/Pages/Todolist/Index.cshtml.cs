@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StarterApp.Interfaces.Services;
 using StarterApp.Models.ViewModels;
-using System.Collections.Generic;
 
 namespace StarterApp.Pages.Todolist
 {
