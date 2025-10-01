@@ -1,0 +1,31 @@
+﻿@page "/Todolist"
+@model StarterApp.Pages.Todolist.IndexModel
+@{
+    var todolist = Model.Todolists;
+}
+
+<h2>Todolists</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in todolist)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Description</td>
+                <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a asp-page="./View" asp-route-id="@item.Id" class="btn btn-primary">View</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
