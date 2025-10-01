@@ -1,6 +1,6 @@
 # README.md Template
 
-⚠️ **UPDATE THIS README FILE upon submission.**  
+⚠️ **UPDATE THE MAIN README FILE upon submission.**  
 Judges will review your branch’s README directly.  
 Do **not** open pull requests — all review is branch-based.
 

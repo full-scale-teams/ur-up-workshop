@@ -3,7 +3,6 @@
 
 Welcome to the official base repository for the onsite .NET 8 workshop.  
 Every team will clone this repo, build their MVP, and submit via **team branch**.
----
 
 ## 🚀 Quick Start
 
@@ -17,15 +16,15 @@ Every team will clone this repo, build their MVP, and submit via **team branch**
 
 Each team branch must include:
 
-- **Updated `README.md`** with:
-    - Branch name: team - (e.g., team-a)
-    - MVP description (problem → solution)
-    - Data model sketch
-    - What works (flow summary)
-    - Screenshots (`/screenshots` folder)
-    - Demo script (2 minutes)
-    - AI usage note (which parts were assisted)
-    - No pull requests during the event. Judges review branches directly
+- **Updated `README.md`** [View Readme template](docs/README_TEMPLATE.md)
+  - Branch name: team - (e.g., team-a)
+  - MVP description (problem → solution)
+  - Data model sketch
+  - What works (flow summary)
+  - Screenshots (`/screenshots` folder)
+  - Demo script (2 minutes)
+  - AI usage note (which parts were assisted)
+  - No pull requests during the event. Judges review branches directly
 
 - **`docs/ai-log.md`** with prompts and edits
 
@@ -125,3 +124,14 @@ Stretch goals are optional if time allows.
 - **Stretch**: 
   - Check-in/out with late return flags; 
   - basic availability analytics
+
+---
+
+## 📚 Additional Docs
+
+- [README Template](docs/README_TEMPLATE.md)
+- [AI Log](docs/ai-log.md)
+- [Configuration Guide](docs/samples/CONFIGURATION.md)
+- [Validation Guide](docs/samples/VALIDATION.md)
+- [Bugs and Fixes](docs/BUGS_AND_FIXES.md)
+- [Common Pitfalls](docs/COMMON_PITFALLS.md)
