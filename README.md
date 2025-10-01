@@ -26,7 +26,7 @@ Each team branch must include:
   - AI usage note (which parts were assisted)
   - No pull requests during the event. Judges review branches directly
 
-- **`docs/ai-log.md`** with prompts and edits
+- **`docs/ai-log.md`** with prompts and edits [View template here](docs/ai-log.md)
 
 - **Commit history** every ~20–30 minutes with meaningful messages
 
