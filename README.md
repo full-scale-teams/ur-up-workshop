@@ -30,6 +30,7 @@ Each team branch must include:
 
 - **Commit history** every ~20–30 minutes with meaningful messages
 
+> For detailed instructions on branch submission, see [CONTRIBUTING.md](CONTRIBUTING.md).
 ---
 
 ## 🏗️ MVP Selection Guide
@@ -124,6 +125,22 @@ Stretch goals are optional if time allows.
 - **Stretch**: 
   - Check-in/out with late return flags; 
   - basic availability analytics
+
+---
+
+## 📊 Evaluation Criteria
+
+Teams will be judged using the following rubric. The focus is on having a **working MVP flow**; other points support clarity and completeness. Each category is scored 1–5 (NI → Not bad → Okay → Good → Very good), except the MVP flow which is scored out of 10.
+
+| Criteria | Points |
+|----------|-------|
+| **Working MVP flow** (Create + List) | 10 |
+| **Code clarity & validation** | 5 |
+| **Understanding of the system** (explain data model & handlers) | 5 |
+| **README + AI log completeness** | 5 |
+| **Tiebreaker**: A small, stable stretch feature (CSV, QR, iCal) | — |
+
+> **Note:** If a team fails to deliver a working MVP flow, their score will rely more heavily on understanding and documentation. Stretch goals are only considered for breaking ties.
 
 ---
 
