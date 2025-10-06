@@ -13,17 +13,16 @@ namespace StarterApp.Services
     {
         private readonly ITodolistRepository _repository;
         private readonly IMapper _mapper;
-
+        
         public TodolistService(ITodolistRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
-
-        public IEnumerable<ViewTodolist> GetAllTodolist()
+        
+        public async Task<IEnumerable<ViewTodolist>> GetAllTodolist()
         {
-            var data = _repository.GetAllTodos();
-
+            var data = await _repository.GetAllTodos();
             return _mapper.Map<IEnumerable<ViewTodolist>>(data);
         }
 

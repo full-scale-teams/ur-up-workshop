@@ -7,7 +7,7 @@ namespace StarterApp.Pages.Todolist
     public class IndexModel : PageModel
     {
         private readonly ITodolistService _service;
-
+        
         public IndexModel(ITodolistService service)
         {
             _service = service;
