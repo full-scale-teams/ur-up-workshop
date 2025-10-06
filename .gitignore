@@ -1151,3 +1151,6 @@ FodyWeavers.xsd
 StarterApp/bin/
 StarterApp/obj/
 
+todo.db
+todo.db-shm
+todo.db-wal

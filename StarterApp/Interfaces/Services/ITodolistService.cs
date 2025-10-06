@@ -4,7 +4,7 @@ namespace StarterApp.Interfaces.Services
 {
     public interface ITodolistService
     {
-        IEnumerable<ViewTodolist> GetAllTodolist();
-        ViewTodolist GetViewTodolist(int id);
+        Task<IEnumerable<ViewTodolist>> GetAllTodolist();
+        Task <ViewTodolist> GetViewTodolist(int id);
     }
 }

@@ -4,7 +4,7 @@ namespace StarterApp.Interfaces.Repositories
 {
     public interface ITodolistRepository
     {
-        IEnumerable<Todolist> GetAllTodos();
-        Todolist? GetById(int id);
+        Task<IEnumerable<Todolist>> GetAllTodos();
+        Task<Todolist?> GetById(int id);
     }
 }

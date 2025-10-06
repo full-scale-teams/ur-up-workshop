@@ -15,9 +15,9 @@ namespace StarterApp.Pages.Todolist
 
         public IEnumerable<ViewTodolist> Todolists { get; set; }
 
-        public void OnGet()
+        public async Task OnGet()
         {
-            Todolists = _service.GetAllTodolist();
+            Todolists = await _service.GetAllTodolist();
         }
     }
 }

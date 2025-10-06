@@ -16,8 +16,8 @@ namespace StarterApp.Services
 
         public TodolistService(ITodolistRepository repository, IMapper mapper)
         {
-            this._repository = repository;
-            this._mapper = mapper;
+            _repository = repository;
+            _mapper = mapper;
         }
 
         public IEnumerable<ViewTodolist> GetAllTodolist()
@@ -27,9 +27,9 @@ namespace StarterApp.Services
             return _mapper.Map<IEnumerable<ViewTodolist>>(data);
         }
 
-        public ViewTodolist GetViewTodolist(int id)
+        public async Task<ViewTodolist> GetViewTodolist(int id)
         {
-            var data = _repository.GetById(id) ?? 
+            var data = await _repository.GetById(id) ?? 
                 throw new NotFoundException("Todolist not found.");
 
             return _mapper.Map<ViewTodolist>(data);

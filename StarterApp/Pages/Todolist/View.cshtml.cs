@@ -19,11 +19,11 @@ namespace StarterApp.Pages.Todolist
             _logger = logger;
         }
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGet(int id)
         {
             try
             {
-                Todolist = _service.GetViewTodolist(id);
+                Todolist = await _service.GetViewTodolist(id);
                 return Page();
             }
             catch (NotFoundException ex)

@@ -1,154 +1,230 @@
+# StarterApp - Todo List Demo
 
-# FullScale × University — Onsite C#/.NET Workshop (Base Repo)
-
-Welcome to the official base repository for the onsite .NET 8 workshop.  
-Every team will clone this repo, build their MVP, and submit via **team branch**.
-
-## 🚀 Quick Start
-
-1. **Clone this repo** (DO NOT FORK ⚠️):
-   ```bash
-   git clone https://github.com/your-org/dotnet-workshop-base.git
-   cd dotnet-workshop-base/src/DotnetWorkshop
-    ```
-
-## 📦 Submission Rules
-
-Each team branch must include:
-
-- **Updated `README.md`** [View Readme template](docs/README_TEMPLATE.md)
-  - Branch name: team - (e.g., team-a)
-  - MVP description (problem → solution)
-  - Data model sketch
-  - What works (flow summary)
-  - Screenshots (`/screenshots` folder)
-  - Demo script (2 minutes)
-  - AI usage note (which parts were assisted)
-  - No pull requests during the event. Judges review branches directly
-
-- **`docs/ai-log.md`** with prompts and edits [View template here](docs/ai-log.md)
-
-- **Commit history** every ~20–30 minutes with meaningful messages
-
-> For detailed instructions on branch submission, see [CONTRIBUTING.md](CONTRIBUTING.md).
----
-
-## 🏗️ MVP Selection Guide
-
-Each team must choose **one** MVP idea below and implement a **Create → List** flow.  
-Stretch goals are optional if time allows.
-
-### 📄 Resume Submission Board
-- **Value:** A lightweight portal where students can submit their resume details and showcase their skills. Faculty and FullScale recruiters can easily browse, filter, and identify candidates per school or course.
-- **MVP:** minimal Razor Pages; EF Core + SQLite  
-  **Entities:**
-    - Resume(Id, StudentName, Email, ResumeUrl, PortfolioUrl, SkillsCsv, SubmittedAt, SchoolId)
-    - School(Id, Name)
-  
-  **Views:**
-  - Add Resume (Name, Email, Resume URL, optional Portfolio, Skills, select School)
-  - List Resumes (with School name, clickable links, ordered by latest submission)
-- **Stretch:**
-    - Search or filter by Name/Skill/School
-    - Sort by date submitted
-    - CSV export for recruiters
+A simple Razor Pages project demonstrating **EF Core migrations**, **SQLite integration**, and **database seeding**.
 
 ---
 
-### 🚀 Capstone Project Showcase
-- **Value**: Acts as a portfolio hub for students and a scouting hub for FullScale; highlights each student’s technical work and stack.
-- **MVP**:
-  **Entities:**
-    - Project(Id, Title, Summary, RepoUrl, TechCsv, StudentContact)  
-      
-- **Views:**
-    - Submit Project (Title, Summary, Repo URL, Tech Stack, Contact Info)
-    - Browse Projects (list with tech tags and contact)
-    - Filter by Technology (via TechCsv)
-    - Featured Carousel (highlighted or randomly featured projects)
-- **Stretch:**
-    - “Invite to Interview” button (sends email to StudentContact)
-    - Project Badges (e.g., “Top Design”, “Most Stars”, “Team Favorite”)
-    - Search by title or student name
-    - CSV export for scouting list
+## Table of Contents
+
+1. [Prerequisites](#prerequisites)
+2. [Project Setup](#project-setup)
+3. [Database Configuration](#database-configuration)
+4. [Applying Migrations](#applying-migrations)
+5. [Seeding the Database](#seeding-the-database)
+6. [Updating the Schema: Adding IsDone Column](#updating-the-schema-adding-isdone-column)
 
 ---
 
-### 🏆 Peer Recognition Wall
-- **Value**: Builds positivity and recognition among students while giving FullScale insight into collaboration, teamwork, and cultural fit.
-- **MVP**: minimal Razor Pages; EF Core + SQLite  
-  **Entities:**
-  - Kudos(Id, FromStudent, ToStudent, Message, CreatedAt)  
-    
-  **Views**:
-    - Submit Kudos
-    - Wall of Kudos Messages
-  
-- **Stretch**:
-    - Filter by recipient name
-    - Leaderboard (most kudos received)
-    - Export kudos messages (CSV) for simple reporting
-    - *(Optional)* Sentiment analysis of messages (basic positive/neutral/negative breakdown for engagement insights)
+## Prerequisites
+
+* [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+* [SQLite](https://www.sqlite.org/download.html) (optional, EF Core can create the file automatically)
+* IDE or Editor (Visual Studio, Rider, VS Code, etc.)
 
 ---
 
-### 🧩 Issue Triage Board (Internal)
-- **Value:** Teaches students how to manage and prioritize issues — a crucial real-world skill in software teams. Can also be repurposed internally by FullScale for tracking small tool requests or quick-fix tasks.
-- **MVP:** Minimal Razor Pages; EF Core + SQLite  
-  **Entities:**
-    - Issue(Id, Title, Severity, Area, Status, CreatedAt)  
-      
-  **Views:**
-    - Add Issue (Title, Severity, Area, default Status = To Do)
-    - Kanban Board (columns: To Do / Doing / Done)
-    - Drag and drop to update status (using htmx or minimal JS)
-- **Stretch:**
-    - CSV import/export of issues
-    - SLA timers (track duration since creation)
-    - Assign issues to team members or roles
-    - Filter by Severity or Area
-    - Simple dashboard: issue counts by status or severity  
+## Project Setup
+
+1. Install required NuGet packages:
+
+```bash
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+dotnet add package Microsoft.EntityFrameworkCore.Design
+```
+
+> These packages enable EF Core and SQLite support.
 
 ---
 
-### 🖨️ Resource/Equipment Reservation
-- **Value**: Lab gear checkout for schools; device lab booking for FullScale.
-- **MVP**: minimal Razor Pages; EF Core + SQLite
-    - Resource(Name, Category)
-    - Reservation(ResourceId, Start, End, ReservedBy)  
-      
-- **Views**: 
-  - Calendar grid
-  - create/cancel reservation
-  - conflict prevention
-  
-- **Stretch**: 
-  - Check-in/out with late return flags; 
-  - basic availability analytics
+## Database Configuration
+
+1. Open `appsettings.json` and set the SQLite connection string:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=todo.db"
+  }
+}
+```
+
+> The SQLite database file `todo.db` will be created in the project root.
+
+2. Create `ApplicationDBContext` in `Data/ApplicationDBContext.cs`:
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+using StarterApp.Models.Entities;
+
+namespace StarterApp.Data
+{
+    /// <summary>
+    /// Configure DbContext here
+    /// </summary>
+    public class ApplicationDBContext : DbContext
+    {
+        // Define DbSet for Todo list
+        public DbSet<Todolist> Todolists { get; set; }
+
+        // Constructor for DbContext
+        public ApplicationDBContext(DbContextOptions options) : base(options) { }
+
+        // Seed sample data
+        public static async Task SeedData(IServiceProvider sp)
+        {
+            await using var db = sp.GetRequiredService<ApplicationDBContext>();
+            await db.Database.EnsureCreatedAsync();
+
+            if (!db.Todolists.Any())
+            {
+                var todolists = new List<Todolist>
+                {
+                    new()
+                    {
+                        Title = "Buy groceries",
+                        Description = "Milk, eggs, bread, and fruits",
+                        CreatedAt = DateTime.UtcNow.AddDays(-2)
+                    },
+                    new()
+                    {
+                        Title = "Workout",
+                        Description = "Go for a 30-minute run",
+                        CreatedAt = DateTime.UtcNow.AddDays(-1)
+                    },
+                    new()
+                    {
+                        Title = "Project meeting",
+                        Description = "Discuss project roadmap with the team",
+                        CreatedAt = DateTime.UtcNow
+                    }
+                };
+
+                db.Todolists.AddRange(todolists);
+                await db.SaveChangesAsync();
+            }
+        }
+    }
+}
+```
+
+3. Register the `ApplicationDBContext` in `Program.cs`:
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+using StarterApp.Data;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApplicationDBContext>(o =>
+    o.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+```
 
 ---
 
-## 📊 Evaluation Criteria
+## Applying Migrations
 
-Teams will be judged using the following rubric. The focus is on having a **working MVP flow**; other points support clarity and completeness. Each category is scored 1–5 (NI → Not bad → Okay → Good → Very good), except the MVP flow which is scored out of 10.
+1. Create the first migration:
 
-| Criteria | Points |
-|----------|-------|
-| **Working MVP flow** (Create + List) | 10 |
-| **Code clarity & validation** | 5 |
-| **Understanding of the system** (explain data model & handlers) | 5 |
-| **README + AI log completeness** | 5 |
-| **Tiebreaker**: A small, stable stretch feature (CSV, QR, iCal) | — |
+```bash
+dotnet ef migrations add InitialCreate
+```
 
-> **Note:** If a team fails to deliver a working MVP flow, their score will rely more heavily on understanding and documentation. Stretch goals are only considered for breaking ties.
+* This generates a `Migrations` folder with scripts to create the `Todolists` table.
+
+2. Apply the migration to create the database:
+
+```bash
+dotnet ef database update
+```
+
+* After this, `todo.db` exists with the `Todolists` table.
 
 ---
 
-## 📚 Additional Docs
+## Seeding the Database
 
-- [README Template](docs/README_TEMPLATE.md)
-- [AI Log](docs/ai-log.md)
-- [Configuration Guide](docs/samples/CONFIGURATION.md)
-- [Validation Guide](docs/samples/VALIDATION.md)
-- [Bugs and Fixes](docs/BUGS_AND_FIXES.md)
-- [Common Pitfalls](docs/COMMON_PITFALLS.md)
+1. Invoke the seeding logic in `Program.cs` after building the app:
+
+```csharp
+var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await ApplicationDBContext.SeedData(services);
+}
+```
+
+> This ensures the database is created and populated with initial todo items at first run.
+
+---
+
+## Updating the Schema: Adding `IsDone` Column
+
+1. **Update the `Todolist` model** (`Models/Entities/Todolist.cs`) to include the new column:
+
+```csharp
+public class Todolist
+{
+    [Key]
+    public int Id { get; set; }
+
+    [Required, StringLength(50)]
+    public string Title { get; set; } = null!;
+
+    [Required, StringLength(50)]
+    public string Description { get; set; } = null!;
+
+    // New column to track completion
+    public bool IsDone { get; set; } = false;
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+}
+```
+
+---
+
+2. **Create a new migration** to reflect the schema change:
+
+```bash
+dotnet ef migrations add AddIsDoneColumn
+```
+
+* This generates a migration file that will add the `IsDone` column to the `Todolists` table.
+
+---
+
+3. **Apply the migration** to update the database:
+
+```bash
+dotnet ef database update
+```
+
+* The existing `todo.db` file will now include the new `IsDone` column.
+* Any previously seeded records remain intact.
+
+---
+
+4. **Optional: Update seeding logic** to include `IsDone` values for new entries:
+
+```csharp
+var todolists = new List<Todolist>
+{
+    new()
+    {
+        Title = "Buy groceries",
+        Description = "Milk, eggs, bread, and fruits",
+        IsDone = false,
+        CreatedAt = DateTime.UtcNow.AddDays(-2)
+    },
+    new()
+    {
+        Title = "Workout",
+        Description = "Go for a 30-minute run",
+        IsDone = true,
+        CreatedAt = DateTime.UtcNow.AddDays(-1)
+    }
+};
+```
+
+> This step is optional; existing rows will have `IsDone = false` by default.
